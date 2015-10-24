@@ -1,0 +1,32 @@
+MAJOR	= 0
+MINOR	= 1
+VERSION	= $(MAJOR).$(MINOR)
+NAME	= gpio
+LIBFILE	= lib$(NAME).so.$(VERSION)
+DEST	= /usr/lib/
+
+# Compiler
+CXXFLAGS += -fPIC
+CXXFLAGS += -Wall -Werror
+CXXFLAGS += -O3
+CXXFLAGS += -std=c++0x
+
+# Linker
+STTCLIBS += -lbcm2835
+
+.PHONY: install test clean
+
+$(LIBFILE): $(NAME).o
+	$(LINK.cc) $(LDLIBS) $^ -shared -o $@ -Wl,-whole-archive $(STTCLIBS) -Wl,-no-whole-archive
+
+install: $(LIBFILE)
+	cp -f $(NAME).h /usr/include
+	cp -f $(LIBFILE) $(DEST)
+	ln -sf $(DEST)/$(LIBFILE) $(DEST)/lib$(NAME).so
+	ldconfig -n $(DEST)
+
+test: $(NAME)-test.o
+	$(LINK.cc) $(LDLIBS) -l$(NAME) $^ -o $(NAME)-test
+
+clean:
+	$(RM) *.o *.so* $(NAME)-test
