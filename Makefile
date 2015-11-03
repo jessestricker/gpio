@@ -9,7 +9,7 @@ DEST	= /usr/lib/
 CXXFLAGS += -fPIC
 CXXFLAGS += -Wall -Werror
 CXXFLAGS += -O3
-CXXFLAGS += -std=c++0x
+CXXFLAGS += -std=c++11
 
 # Linker
 STTCLIBS += -lbcm2835
