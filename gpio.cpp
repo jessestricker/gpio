@@ -17,7 +17,7 @@ struct setup_t {
 };
 
 static setup_t s_setup;
-}
+} // namespace gpio
 
 // struct setup_t
 bool gpio::setup_t::s_initialized = false;
