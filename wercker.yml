@@ -1,10 +1,11 @@
+--- 
 box: debian
-build:
-    steps:
+build: 
+  steps: 
     - jessestricker/doxygen
-    
-deploy:
-    steps:
-    - lukevivier/gh-pages:
-        token: $GIT_TOKEN
+deploy: 
+  steps: 
+    - 
+      lukevivier/gh-pages: 
         basedir: html
+        token: $GIT_TOKEN
