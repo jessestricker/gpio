@@ -1,0 +1,4 @@
+box: debian
+build:
+    steps:
+    - jessestricker/doxygen
