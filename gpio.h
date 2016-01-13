@@ -1,51 +1,54 @@
 #ifndef GPIO_H
 #define GPIO_H
 
-#include <chrono>
-#include <cinttypes>
 #include <vector>
 
-// classes
-
+/// GPIO enthält Klassen zur einfachen Steuerung von den GPIO Pins des Raspberry Pi.
 namespace gpio {
-// base class for all common pin functionality
+    
+/// Die Basisklasse für einen Pin. Sie enthält Methoden zum Abfragen von Nummer und Status.
 class pin {
 public:
     virtual ~pin();
-
+    
+    /// Gibt die physikalische Pinnummer zurück, über die der Pin angesprochen wird.
     unsigned int number() const { return m_number; }
+    
+    /// Gibt den Pinstatus zurück.
+    /// Ist der Pin auf HIGH, wird true zurückgegeben, bei LOW false.
     virtual bool state() const;
 
 protected:
-    explicit pin(uint8_t number);
+    explicit pin(unsigned int number);
 
 private:
-    static std::vector<uint8_t> s_registeredPins;
-    uint8_t m_number;
+    static std::vector<unsigned int> s_registeredPins;
+    unsigned int m_number;
 };
 
-// class used for digital reading a certain pin
+/// Die Klasse input_pin liest einen digitalen Pin.
 class input_pin : public pin {
 public:
-    explicit input_pin(uint8_t number);
-    virtual ~input_pin() {}
+    explicit input_pin(unsigned int number);
 };
 
-// class used for digital writing to a certain pin
+/// Die Klasse output_pin setzt einen digitalen Pin.
 class output_pin : public pin {
 public:
-    explicit output_pin(uint8_t number);
-    virtual ~output_pin() {}
+    explicit output_pin(unsigned int number);
 
+    /// Setzt den Pinstatus. Ist value true, wird der Pin auf HIGH gesetzt,
+    /// andernfalls auf LOW.
     void set_state(bool value);
 };
 
 // class used for digital buttons connected to GND, derrived of input
 class button_pin : public input_pin {
 public:
-    explicit button_pin(uint8_t number);
-    virtual ~button_pin() {}
+    explicit button_pin(unsigned int number);
 
+    /// Gibt den Pinstatus zurück.
+    /// Ist der Knopf gedrückt, wird true zurückgegeben, andernfalls false.
     virtual bool state() const override;
 };
 }

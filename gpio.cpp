@@ -1,5 +1,6 @@
 #include "gpio.h"
 
+#include <chrono>
 #include <iostream>
 #include <stdexcept>
 #include <thread>
@@ -53,9 +54,9 @@ gpio::setup_t::~setup_t()
 }
 
 // class pin
-std::vector<uint8_t> gpio::pin::s_registeredPins;
+std::vector<unsigned int> gpio::pin::s_registeredPins;
 
-gpio::pin::pin(uint8_t number)
+gpio::pin::pin(unsigned int number)
     : m_number(number)
 {
     // check if registered
@@ -83,14 +84,14 @@ gpio::pin::~pin()
 bool gpio::pin::state() const { return bcm2835_gpio_lev(number()) == HIGH; }
 
 // class input_pin
-gpio::input_pin::input_pin(uint8_t number)
+gpio::input_pin::input_pin(unsigned int number)
     : pin(number)
 {
     bcm2835_gpio_fsel(number, BCM2835_GPIO_FSEL_INPT);
 }
 
 // class output_pin
-gpio::output_pin::output_pin(uint8_t number)
+gpio::output_pin::output_pin(unsigned int number)
     : pin(number)
 {
     bcm2835_gpio_fsel(number, BCM2835_GPIO_FSEL_OUTP);
@@ -103,7 +104,7 @@ void gpio::output_pin::set_state(bool value)
 }
 
 // class button_pin
-gpio::button_pin::button_pin(uint8_t number)
+gpio::button_pin::button_pin(unsigned int number)
     : input_pin(number)
 {
     // set resistor to pull up
