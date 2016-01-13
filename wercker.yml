@@ -1,11 +1,9 @@
---- 
-box: debian
+box: wercker/default
 build: 
   steps: 
     - jessestricker/doxygen
 deploy: 
   steps: 
-    - 
-      lukevivier/gh-pages: 
+    - lukevivier/gh-pages: 
         basedir: html
         token: $GIT_TOKEN
