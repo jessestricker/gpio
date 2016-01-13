@@ -1,5 +1,5 @@
 PROJECT_NAME = "GPIO"
-PROJECT_BRIEF = "A c++ library easing access to BCM2835, used on the Raspberry Pi"
+PROJECT_BRIEF = "Eine C++ Bibliothek, die den Zugriff auf die Pins des Raspberry Pi vereinfacht."
 
 OUTPUT_LANGUAGE = German
 
