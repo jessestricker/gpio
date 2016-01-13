@@ -2,3 +2,9 @@ box: debian
 build:
     steps:
     - jessestricker/doxygen
+    
+deploy:
+    steps:
+    - lukevivier/gh-pages:
+        token: $GIT_TOKEN
+        basedir: html
